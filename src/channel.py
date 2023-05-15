@@ -1,15 +1,16 @@
 import json
 from googleapiclient.discovery import build
+
+
 class Channel:
     """Класс для ютуб-канала"""
-
     def __init__(self, channel_id: str) -> None:
         """Экземпляр инициализируется id канала. Дальше все данные будут подтягиваться по API."""
-        self._channel_id = channel_id
+        self.__channel_id = channel_id
         youtube = self.get_service()
         response = youtube.channels().list(
             part='snippet,statistics',
-            id=self._channel_id
+            id=self.__channel_id
         ).execute()
         channel = response['items'][0]
         self.title = channel['snippet']['title']
@@ -28,13 +29,12 @@ class Channel:
     @property
     def channel_id(self):
         """Возвращает id канала"""
-        return self._channel_id
-
+        return self.__channel_id
 
     def to_json(self, filename):
         """Сохраняет в файл значения атрибутов экземпляра Channel"""
         data = {
-            'channel_id': self._channel_id,
+            'channel_id': self.__channel_id,
             'title': self.title,
             'description': self.description,
             'custom_url': self.custom_url,
@@ -50,7 +50,10 @@ class Channel:
         """Выводит в консоль информацию о канале."""
         response = self.youtube.channels().list(
             part='snippet,statistics',
-            id=self._channel_id
+            id=self.__channel_id
         ).execute()
 
         print(json.dumps(response, indent=4, ensure_ascii=False))
+
+
+
