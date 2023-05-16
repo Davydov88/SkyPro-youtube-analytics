@@ -1,4 +1,5 @@
 from src.channel import Channel
+from
 
 if __name__ == '__main__':
     # Создаем два экземпляра класса
