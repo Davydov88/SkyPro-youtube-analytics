@@ -55,5 +55,37 @@ class Channel:
 
         print(json.dumps(response, indent=4, ensure_ascii=False))
 
+    def __str__(self):
+        """
+        Возвращает название и ссылку на канал по шаблону <название канала> <ссылка на канал>
+        """
+        return f"{self.title} ({self.custom_url})"
 
+    def __add__(self, other):
+        """Складывает значения сумм подписчиков двух каналов"""
+        return self.subscriber_count + other.subscriber_count
+
+    def __sub__(self, other):
+        """Вычитает значения сумм подписчиков двух каналов"""
+        return self.subscriber_count - other.subscriber_count
+
+    def __gt__(self, other):
+        """Сравнение двух каналов: больше"""
+        return self.subscriber_count > other.subscriber_count
+
+    def __ge__(self, other):
+        """Сравнение двух каналов: больше либо равно"""
+        return self.subscriber_count >= other.subscriber_count
+
+    def __lt__(self, other):
+        """Сравнение двух каналов: меньше"""
+        return self.subscriber_count < other.subscriber_count
+
+    def __le__(self, other):
+        """Сравнение двух каналов: меньше либо равно"""
+        return self.subscriber_count <= other.subscriber_count
+
+    def __eq__(self, other):
+        """Сравнивает значения сумм подписчиков двух каналов"""
+        return self.subscriber_count == other.subscriber_count
 
