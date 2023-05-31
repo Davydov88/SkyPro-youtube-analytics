@@ -10,13 +10,15 @@ class Video:
 
     def __init__(self, video_id):
         self.video_id = video_id
+        try:
+            channel_data: dict = self.get_video_data()
 
-        channel_data: dict = self.get_video_data()
-
-        self.title: str = channel_data['items'][0]['snippet']['title']
-        self.url: str = str("https://youtu.be/" + video_id)
-        self.view_count: int = channel_data['items'][0]['statistics']['viewCount']
-        self.like_count: int = channel_data['items'][0]['statistics']['likeCount']
+            self.title: str = channel_data['items'][0]['snippet']['title']
+            self.url: str = str("https://youtu.be/" + video_id)
+            self.view_count: int = channel_data['items'][0]['statistics']['viewCount']
+            self.like_count: int = channel_data['items'][0]['statistics']['likeCount']
+        except:
+            raise VideoNotFound("The video that you are trying to retrieve cannot be found")
 
     def __str__(self):
         """Возвращает строковое представление атрибута класса"""
@@ -27,6 +29,13 @@ class Video:
         return Channel.get_service().videos().list(part='snippet,statistics,contentDetails,topicDetails',
                                                    id=self.video_id
                                                    ).execute()
+
+
+class VideoNotFound(Exception):
+    """
+    Базовый класс исключения VideoNotFound
+    """
+    pass
 
 
 class PLVideo(Video):
