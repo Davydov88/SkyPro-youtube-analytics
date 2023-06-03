@@ -18,7 +18,10 @@ class Video:
             self.view_count: int = channel_data['items'][0]['statistics']['viewCount']
             self.like_count: int = channel_data['items'][0]['statistics']['likeCount']
         except:
-            raise VideoNotFound("The video that you are trying to retrieve cannot be found")
+            self.title = None
+            self.url = None
+            self.view_count = None
+            self.like_count = None
 
     def __str__(self):
         """Возвращает строковое представление атрибута класса"""
